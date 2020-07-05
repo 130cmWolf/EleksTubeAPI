@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO.Ports;
 using System.Net.Mail;
 using System.Text;
+using System.Threading;
 
 namespace EleksTubeAPI
 {
@@ -62,7 +63,7 @@ namespace EleksTubeAPI
         private void Serial_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             string str = ((SerialPort)sender).ReadLine();
-            System.Console.WriteLine(str);
+            Console.WriteLine(str);
             if (str.IndexOf("Success") >= 0)
             {
                 SendWait = false;
@@ -92,10 +93,10 @@ namespace EleksTubeAPI
             {
                 sendparam.Append(String.Format("{0}{1:X2}{2:X2}{3:X2}", tTime[i], cColor[i].R, cColor[i].G, cColor[i].B));
             }
-            System.Console.WriteLine(sendparam.ToString());
-            serial.Write(sendparam.ToString());
+            Console.WriteLine(sendparam.ToString());
             SendWait = true;
-            while (SendWait) ;
+            serial.Write(sendparam.ToString());
+            while (SendWait) Thread.Sleep(1);
         }
 
         public void SendMode()
@@ -103,10 +104,10 @@ namespace EleksTubeAPI
             StringBuilder sendparam = new StringBuilder();
             sendparam.Append("$");
             sendparam.Append(String.Format("{0}{1}{2}", (int)mode, (int)colorMode, (int)timeMode));
-            System.Console.WriteLine(sendparam.ToString());
-            serial.Write(sendparam.ToString());
+            Console.WriteLine(sendparam.ToString());
             SendWait = true;
-            while (SendWait) ;
+            serial.Write(sendparam.ToString());
+            while (SendWait) Thread.Sleep(1);
         }
 #if DEBUG
         public void TestSend(byte[] test)
