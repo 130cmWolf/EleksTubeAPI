@@ -4,6 +4,9 @@
 
 Not sure...
 
+> API v5.1  
+> https://forum.eleksmaker.com/topic/1941/elekstube-api-control-protocol
+
 ### Link Serial Baud Rate
 ```
 115200
