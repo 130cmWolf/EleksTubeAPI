@@ -20,7 +20,7 @@ namespace EleksTubeAPI
             string[] ports = SerialPort.GetPortNames();
             foreach (string port in ports)
             {
-                System.Console.WriteLine(port);
+                Console.WriteLine(port);
             }
         }
         SerialPort serial;

@@ -10,26 +10,39 @@ namespace EleksTubeSetTime
     {
         static void Main(string[] args)
         {
-            string usecom = "COM4";
-            try
+            if (args.Length > 0)
             {
-                using (ControlAPI eleksTubeAPI = new ControlAPI(usecom))
+                try
                 {
-                    eleksTubeAPI.colorMode = ColorMode.Flow;
-                    eleksTubeAPI.timeMode = TimeMode.XXIVh;
-                    eleksTubeAPI.AllColor = Color.Orange;
-                    eleksTubeAPI.SendMode();
-                    eleksTubeAPI.SendNow();
+                    using (ControlAPI eleksTubeAPI = new ControlAPI(args[0]))
+                    {
+                        eleksTubeAPI.colorMode = ColorMode.Flow;
+                        eleksTubeAPI.timeMode = TimeMode.XXIVh;
+                        eleksTubeAPI.AllColor = Color.Orange;
+                        eleksTubeAPI.SendMode();
+                        eleksTubeAPI.SendNow();
+                    }
+                }
+                catch (UnauthorizedAccessException e)
+                {
+                    Console.WriteLine(args[0] + " is Using");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
                 }
             }
-            catch (UnauthorizedAccessException e)
+            else
             {
-                Console.WriteLine(usecom + " is Using");
+                Console.WriteLine("using: EleksTubeSetTime <SerialPortName>");
+                Console.WriteLine("SerialPortName");
+                Console.WriteLine("--------");
+                ControlAPI.PortList();
+                Console.WriteLine("--------");
+                Console.WriteLine("Exit to enter key...");
+                Console.ReadLine();
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+
         }
     }
 }
